@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agharbi Parfum | Parfumerie de Luxe</title>
+  <meta name="description" content="Agharbi Parfum - Découvrez notre collection exclusive de parfums de luxe pour homme et femme. Fragrances orientales raffinées.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- Page Loader -->
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-content">
+      <div class="loader-logo">AGHARBI PARFUM</div>
+      <div class="loader-bar"></div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#" class="navbar-brand">Agharbi Parfum</a>
+      
+      <div class="nav-links" id="navLinks">
+        <a href="#hero" class="active" data-fr="Accueil" data-ar="الرئيسية">Accueil</a>
+        <a href="#categories" data-fr="Catégories" data-ar="الفئات">Catégories</a>
+        <a href="#products" data-fr="Produits" data-ar="المنتجات">Produits</a>
+        <a href="#about" data-fr="À propos" data-ar="من نحن">À propos</a>
+        <a href="#contact" data-fr="Contact" data-ar="اتصل بنا">Contact</a>
+      </div>
+
+      <div class="nav-actions">
+        <button class="lang-toggle" id="langToggle" title="تغيير اللغة">AR</button>
+        <button class="cart-icon" id="cartToggle" aria-label="Panier">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="cart-badge" id="cartBadge">0</span>
+        </button>
+        <div class="hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" id="mobileClose"><i class="fas fa-times"></i></button>
+    <a href="#hero" data-fr="Accueil" data-ar="الرئيسية">Accueil</a>
+    <a href="#categories" data-fr="Catégories" data-ar="الفئات">Catégories</a>
+    <a href="#products" data-fr="Produits" data-ar="المنتجات">Produits</a>
+    <a href="#about" data-fr="À propos" data-ar="من نحن">À propos</a>
+    <a href="#contact" data-fr="Contact" data-ar="اتصل بنا">Contact</a>
+    <a href="admin.html" data-fr="Admin" data-ar="الإدارة">Admin</a>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <img src="images/hero-banner.jpg" alt="Agharbi Parfum Collection">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-badge" data-fr="Collection Exclusive" data-ar="مجموعة حصرية">Collection Exclusive</span>
+      <h1>
+        <span data-fr="L'Art de la" data-ar="فن">L'Art de la</span><br>
+        <span class="gold" data-fr="Parfumerie" data-ar="العطور">Parfumerie</span>
+      </h1>
+      <p class="hero-subtitle" data-fr="Découvrez notre collection exclusive de parfums orientaux, créés avec les ingrédients les plus raffinés du monde." data-ar="اكتشف مجموعتنا الحصرية من العطور الشرقية، المصنوعة من أرقى المكونات في العالم.">
+        Découvrez notre collection exclusive de parfums orientaux, créés avec les ingrédients les plus raffinés du monde.
+      </p>
+      <div class="hero-buttons">
+        <a href="#products" class="btn-primary"><span data-fr="Découvrir" data-ar="اكتشف">Découvrir</span> <i class="fas fa-arrow-right"></i></a>
+        <a href="#about" class="btn-outline" data-fr="Notre Histoire" data-ar="قصتنا">Notre Histoire</a>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <div class="mouse"></div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="section" id="categories">
+    <div class="container">
+      <div class="section-header fade-in-up">
+        <div class="accent-line"></div>
+        <h2 data-fr="Nos <span class='gold'>Catégories</span>" data-ar="<span class='gold'>فئاتنا</span>">Nos <span class="gold">Catégories</span></h2>
+        <p data-fr="Explorez notre univers de fragrances pour homme et femme" data-ar="اكتشف عالم العطور للرجال والنساء">Explorez notre univers de fragrances pour homme et femme</p>
+      </div>
+      <div class="categories-grid fade-in-up">
+        <div class="category-card" data-category="homme" onclick="filterProducts('homme')">
+          <img src="images/perfume-men-1.jpg" alt="Parfums Homme">
+          <div class="overlay">
+            <h3 data-fr="Pour Homme" data-ar="للرجال">Pour Homme</h3>
+            <p data-fr="Des fragrances puissantes et élégantes" data-ar="عطور قوية وأنيقة">Des fragrances puissantes et élégantes</p>
+            <span class="arrow" data-fr="Explorer →" data-ar="← اكتشف">Explorer →</span>
+          </div>
+        </div>
+        <div class="category-card" data-category="femme" onclick="filterProducts('femme')">
+          <img src="images/perfume-women-1.jpg" alt="Parfums Femme">
+          <div class="overlay">
+            <h3 data-fr="Pour Femme" data-ar="للنساء">Pour Femme</h3>
+            <p data-fr="Des senteurs florales et envoûtantes" data-ar="عطور زهرية ساحرة">Des senteurs florales et envoûtantes</p>
+            <span class="arrow" data-fr="Explorer →" data-ar="← اكتشف">Explorer →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section class="section" id="products">
+    <div class="container">
+      <div class="section-header fade-in-up">
+        <div class="accent-line"></div>
+        <h2 data-fr="Notre <span class='gold'>Collection</span>" data-ar="<span class='gold'>مجموعتنا</span>">Notre <span class="gold">Collection</span></h2>
+        <p data-fr="Des parfums d'exception pour chaque occasion" data-ar="عطور استثنائية لكل مناسبة">Des parfums d'exception pour chaque occasion</p>
+      </div>
+
+      <div class="filter-bar fade-in-up">
+        <button class="filter-btn active" data-filter="all" data-fr="Tous" data-ar="الكل">Tous</button>
+        <button class="filter-btn" data-filter="homme" data-fr="Homme" data-ar="رجالي">Homme</button>
+        <button class="filter-btn" data-filter="femme" data-fr="Femme" data-ar="نسائي">Femme</button>
+        <button class="filter-btn" data-filter="nouveau" data-fr="Nouveau" data-ar="جديد">Nouveau</button>
+        <button class="filter-btn" data-filter="bestseller" data-fr="Best-seller" data-ar="الأكثر مبيعاً">Best-seller</button>
+      </div>
+
+      <div class="products-grid" id="productsGrid">
+        <!-- Products will be injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-image fade-in-up">
+          <img src="images/perfume-unisex-1.jpg" alt="Agharbi Parfum - Notre Histoire">
+        </div>
+        <div class="about-content fade-in-up">
+          <div class="section-header" style="text-align:left;">
+            <div class="accent-line" style="margin:0 0 16px;"></div>
+            <h2 data-fr="Notre <span class='gold'>Histoire</span>" data-ar="<span class='gold'>قصتنا</span>">Notre <span class="gold">Histoire</span></h2>
+          </div>
+          <h3 data-fr="La passion de la <span class='gold'>parfumerie</span> depuis des générations" data-ar="شغف <span class='gold'>العطور</span> منذ أجيال">La passion de la <span class="gold">parfumerie</span> depuis des générations</h3>
+          <p data-fr="Agharbi Parfum est né d'une passion profonde pour l'art de la parfumerie orientale. Chaque fragrance est soigneusement composée avec les meilleurs ingrédients naturels." data-ar="ولد Agharbi Parfum من شغف عميق بفن العطور الشرقية. كل عطر مصمم بعناية من أفضل المكونات الطبيعية.">
+            Agharbi Parfum est né d'une passion profonde pour l'art de la parfumerie orientale. Chaque fragrance est soigneusement composée avec les meilleurs ingrédients naturels.
+          </p>
+          <p data-fr="Nous sélectionnons les essences les plus pures du monde entier pour créer des parfums qui racontent une histoire unique." data-ar="نختار أنقى الخلاصات من جميع أنحاء العالم لصنع عطور تحكي قصة فريدة.">
+            Nous sélectionnons les essences les plus pures du monde entier pour créer des parfums qui racontent une histoire unique.
+          </p>
+          <div class="about-stats">
+            <div class="stat-item">
+              <div class="stat-number">50+</div>
+              <div class="stat-label" data-fr="Parfums" data-ar="عطر">Parfums</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">10K+</div>
+              <div class="stat-label" data-fr="Clients" data-ar="عميل">Clients</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">5★</div>
+              <div class="stat-label" data-fr="Satisfaction" data-ar="رضا">Satisfaction</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="section newsletter-section" id="contact">
+    <div class="container">
+      <div class="newsletter-content fade-in-up">
+        <h3 data-fr="Restez <span class='gold'>Informé</span>" data-ar="ابقَ على <span class='gold'>اطلاع</span>">Restez <span class="gold">Informé</span></h3>
+        <p data-fr="Inscrivez-vous pour recevoir nos offres exclusives et les dernières nouveautés" data-ar="سجل لتلقي عروضنا الحصرية وآخر المستجدات">
+          Inscrivez-vous pour recevoir nos offres exclusives et les dernières nouveautés
+        </p>
+        <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+          <input type="email" id="newsletterEmail" placeholder="Votre adresse e-mail" data-fr-placeholder="Votre adresse e-mail" data-ar-placeholder="بريدك الإلكتروني" required>
+          <button type="submit" data-fr="S'inscrire" data-ar="اشترك">S'inscrire</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="footer-brand">AGHARBI PARFUM</div>
+          <p class="footer-about" data-fr="La maison de parfumerie Agharbi vous propose des fragrances orientales d'exception, créées avec passion et savoir-faire." data-ar="دار عطور Agharbi تقدم لكم عطوراً شرقية استثنائية، مصنوعة بشغف وخبرة.">
+            La maison de parfumerie Agharbi vous propose des fragrances orientales d'exception, créées avec passion et savoir-faire.
+          </p>
+          <div class="social-links">
+            <a href="https://web.facebook.com/yassin.agharbi/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4 data-fr="Liens Rapides" data-ar="روابط سريعة">Liens Rapides</h4>
+          <ul>
+            <li><a href="#hero" data-fr="Accueil" data-ar="الرئيسية">Accueil</a></li>
+            <li><a href="#products" data-fr="Collection" data-ar="المجموعة">Collection</a></li>
+            <li><a href="#about" data-fr="À propos" data-ar="من نحن">À propos</a></li>
+            <li><a href="#contact" data-fr="Contact" data-ar="اتصل بنا">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-fr="Catégories" data-ar="الفئات">Catégories</h4>
+          <ul>
+            <li><a href="#" onclick="filterProducts('homme')" data-fr="Pour Homme" data-ar="للرجال">Pour Homme</a></li>
+            <li><a href="#" onclick="filterProducts('femme')" data-fr="Pour Femme" data-ar="للنساء">Pour Femme</a></li>
+            <li><a href="#" onclick="filterProducts('nouveau')" data-fr="Nouveautés" data-ar="الجديد">Nouveautés</a></li>
+            <li><a href="#" onclick="filterProducts('bestseller')" data-fr="Best-sellers" data-ar="الأكثر مبيعاً">Best-sellers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-fr="Contact" data-ar="اتصل بنا">Contact</h4>
+          <ul class="footer-contact">
+            <li><i class="fas fa-map-marker-alt"></i> <span data-fr="Maroc" data-ar="المغرب">Maroc</span></li>
+            <li><i class="fas fa-phone"></i> <span>+212 6XX-XXXXXX</span></li>
+            <li><i class="fas fa-envelope"></i> <span>contact@agharbiparfum.com</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 <span class="gold">Agharbi Parfum</span>. <span data-fr="Tous droits réservés." data-ar="جميع الحقوق محفوظة.">Tous droits réservés.</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart Sidebar -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3><span data-fr="Panier" data-ar="السلة">Panier</span> <span class="count" id="cartCount">(0)</span></h3>
+      <button class="cart-close" id="cartClose"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty" id="cartEmpty">
+        <i class="fas fa-shopping-bag"></i>
+        <p data-fr="Votre panier est vide" data-ar="سلتك فارغة">Votre panier est vide</p>
+      </div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none;">
+      <div class="cart-total">
+        <span class="cart-total-label" data-fr="Total" data-ar="المجموع">Total</span>
+        <span class="cart-total-amount" id="cartTotal">0 MAD</span>
+      </div>
+      <button class="checkout-btn" onclick="checkout()" data-fr="Commander" data-ar="اطلب الآن">Commander</button>
+    </div>
+  </div>
+
+  <!-- Product Modal -->
+  <div class="product-modal-overlay" id="productModal">
+    <div class="product-modal">
+      <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+      <div class="modal-image">
+        <img id="modalImage" src="" alt="">
+      </div>
+      <div class="modal-details">
+        <span class="modal-category" id="modalCategory"></span>
+        <h2 class="modal-name" id="modalName"></h2>
+        <div class="modal-price" id="modalPrice"></div>
+        <p class="modal-desc" id="modalDesc"></p>
+        <div class="modal-sizes">
+          <div class="modal-sizes-label" data-fr="Volume :" data-ar="الحجم :">Volume :</div>
+          <div class="size-options" id="modalSizes">
+            <button class="size-btn active" data-size="50ml">50ml</button>
+            <button class="size-btn" data-size="100ml">100ml</button>
+            <button class="size-btn" data-size="150ml">150ml</button>
+          </div>
+        </div>
+        <div class="modal-qty">
+          <span class="modal-qty-label" data-fr="Quantité :" data-ar="الكمية :">Quantité :</span>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeModalQty(-1)">−</button>
+            <span class="qty-value" id="modalQty">1</span>
+            <button class="qty-btn" onclick="changeModalQty(1)">+</button>
+          </div>
+        </div>
+        <button class="modal-add-btn" id="modalAddBtn" data-fr="Ajouter au panier" data-ar="أضف إلى السلة">
+          <i class="fas fa-shopping-bag"></i> Ajouter au panier
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="backToTop" aria-label="Retour en haut">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agharbi Parfum | Administration</title>
+  <meta name="description" content="Panneau d'administration - Gérer les produits Agharbi Parfum">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="admin-page">
+
+  <!-- Admin Container -->
+  <div class="admin-container">
+    
+    <!-- Admin Header -->
+    <div class="admin-header">
+      <h1><span class="gold">Agharbi Parfum</span> — Administration</h1>
+      <p>Gérez vos produits, importez depuis Excel et exportez votre catalogue</p>
+      <div class="admin-nav">
+        <a href="index.html"><i class="fas fa-home"></i> Boutique</a>
+        <a href="#" class="active" onclick="showTab('products')"><i class="fas fa-box"></i> Produits</a>
+        <a href="#" onclick="showTab('import')"><i class="fas fa-file-excel"></i> Import Excel</a>
+        <a href="#" onclick="showTab('add')"><i class="fas fa-plus-circle"></i> Ajouter</a>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="admin-stats" id="adminStats">
+      <div class="admin-stat-card">
+        <div class="stat-icon"><i class="fas fa-box-open"></i></div>
+        <div class="stat-value" id="statTotal">0</div>
+        <div class="stat-label">Total Produits</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="stat-icon"><i class="fas fa-mars"></i></div>
+        <div class="stat-value" id="statHomme">0</div>
+        <div class="stat-label">Pour Homme</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="stat-icon"><i class="fas fa-venus"></i></div>
+        <div class="stat-value" id="statFemme">0</div>
+        <div class="stat-label">Pour Femme</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="stat-icon"><i class="fas fa-star"></i></div>
+        <div class="stat-value" id="statBestseller">0</div>
+        <div class="stat-label">Best-sellers</div>
+      </div>
+    </div>
+
+    <!-- Tab: Products Table -->
+    <div id="tabProducts" class="admin-tab">
+      <div class="data-table-container">
+        <div class="data-table-header">
+          <h3><i class="fas fa-list"></i> Liste des Produits</h3>
+          <div class="data-table-actions">
+            <button class="admin-btn admin-btn-outline" onclick="exportToExcel()">
+              <i class="fas fa-download"></i> Exporter Excel
+            </button>
+            <button class="admin-btn admin-btn-danger" onclick="clearAllProducts()">
+              <i class="fas fa-trash"></i> Tout Supprimer
+            </button>
+          </div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Nom (FR)</th>
+                <th>Nom (AR)</th>
+                <th>Catégorie</th>
+                <th>Prix (MAD)</th>
+                <th>Badge</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="productsTableBody">
+              <!-- Filled by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Import Excel -->
+    <div id="tabImport" class="admin-tab" style="display:none;">
+      <div class="upload-section">
+        <h3><i class="fas fa-file-excel"></i> Importer depuis Excel</h3>
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="excelFile" accept=".xlsx,.xls,.csv" onchange="handleFileUpload(event)">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <h4>Glissez votre fichier ici ou cliquez pour parcourir</h4>
+          <p>Formats supportés: .xlsx, .xls, .csv</p>
+          <div class="file-types">Maximum 10MB</div>
+        </div>
+        <div class="template-download" onclick="downloadTemplate()">
+          <i class="fas fa-download"></i> Télécharger le modèle Excel
+        </div>
+      </div>
+
+      <!-- Preview Table -->
+      <div id="previewSection" style="display:none;">
+        <div class="data-table-container">
+          <div class="data-table-header">
+            <h3><i class="fas fa-eye"></i> Aperçu des données</h3>
+            <div class="data-table-actions">
+              <button class="admin-btn admin-btn-primary" onclick="confirmImport()">
+                <i class="fas fa-check"></i> Confirmer l'import
+              </button>
+              <button class="admin-btn admin-btn-outline" onclick="cancelImport()">
+                <i class="fas fa-times"></i> Annuler
+              </button>
+            </div>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Nom (FR)</th>
+                  <th>Nom (AR)</th>
+                  <th>Catégorie</th>
+                  <th>Prix</th>
+                  <th>Description (FR)</th>
+                  <th>Badge</th>
+                </tr>
+              </thead>
+              <tbody id="previewTableBody">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Add Product -->
+    <div id="tabAdd" class="admin-tab" style="display:none;">
+      <div class="admin-form">
+        <h3 style="font-family:var(--font-heading); margin-bottom:24px;">
+          <i class="fas fa-plus-circle" style="color:var(--color-gold);"></i> Ajouter un Produit
+        </h3>
+        <form onsubmit="addProductManual(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nom (Français)</label>
+              <input type="text" id="addNameFr" placeholder="Ex: Oud Royal" required>
+            </div>
+            <div class="form-group">
+              <label>Nom (العربية)</label>
+              <input type="text" id="addNameAr" placeholder="Ex: عود ملكي" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Catégorie</label>
+              <select id="addCategory" required>
+                <option value="homme">Pour Homme</option>
+                <option value="femme">Pour Femme</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Prix (MAD)</label>
+              <input type="number" id="addPrice" placeholder="450" min="0" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Badge</label>
+              <select id="addBadge">
+                <option value="">Aucun</option>
+                <option value="nouveau">Nouveau</option>
+                <option value="bestseller">Best-seller</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Image URL</label>
+              <input type="text" id="addImage" placeholder="images/perfume-men-1.jpg" value="images/perfume-men-1.jpg">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Description (Français)</label>
+            <textarea id="addDescFr" placeholder="Description en français..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Description (العربية)</label>
+            <textarea id="addDescAr" placeholder="الوصف بالعربية..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Tailles disponibles (séparées par des virgules)</label>
+            <input type="text" id="addSizes" placeholder="50ml, 100ml, 150ml" value="50ml, 100ml, 150ml">
+          </div>
+          <button type="submit" class="admin-btn admin-btn-primary" style="padding:14px 40px; font-size:0.9rem;">
+            <i class="fas fa-plus"></i> Ajouter le Produit
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="product-modal-overlay" id="editModal">
+      <div class="product-modal" style="grid-template-columns:1fr; max-width:600px;">
+        <button class="modal-close" onclick="closeEditModal()"><i class="fas fa-times"></i></button>
+        <div class="modal-details" style="padding:40px;">
+          <h2 class="modal-name" style="margin-bottom:24px;"><i class="fas fa-edit" style="color:var(--color-gold);"></i> Modifier le Produit</h2>
+          <form onsubmit="saveEditProduct(event)">
+            <input type="hidden" id="editId">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nom (FR)</label>
+                <input type="text" id="editNameFr" required>
+              </div>
+              <div class="form-group">
+                <label>Nom (AR)</label>
+                <input type="text" id="editNameAr" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Catégorie</label>
+                <select id="editCategory" required>
+                  <option value="homme">Pour Homme</option>
+                  <option value="femme">Pour Femme</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Prix (MAD)</label>
+                <input type="number" id="editPrice" min="0" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Badge</label>
+                <select id="editBadge">
+                  <option value="">Aucun</option>
+                  <option value="nouveau">Nouveau</option>
+                  <option value="bestseller">Best-seller</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Image URL</label>
+                <input type="text" id="editImage">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Description (FR)</label>
+              <textarea id="editDescFr"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Description (AR)</label>
+              <textarea id="editDescAr"></textarea>
+            </div>
+            <button type="submit" class="admin-btn admin-btn-primary" style="padding:14px 40px; font-size:0.9rem;">
+              <i class="fas fa-save"></i> Enregistrer
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- SheetJS (xlsx) for Excel support -->
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
