@@ -466,7 +466,7 @@ function checkout() {
   const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
   msg += `\n${currentLang === 'fr' ? 'Total' : 'المجموع'}: ${total} MAD`;
   
-  const whatsappUrl = `https://wa.me/212600000000?text=${encodeURIComponent(msg)}`;
+  const whatsappUrl = `https://wa.me/212777477756?text=${encodeURIComponent(msg)}`;
   window.open(whatsappUrl, '_blank');
 }
 
