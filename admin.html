@@ -10,8 +10,28 @@
 </head>
 <body class="admin-page">
 
+  <!-- Admin Auth Lock Screen Overlay -->
+  <div class="admin-auth-overlay" id="adminAuthOverlay">
+    <div class="admin-auth-box">
+      <div class="auth-icon"><i class="fas fa-user-shield"></i></div>
+      <h2>Espace Administrateur</h2>
+      <p>Entrez le mot de passe pour accéder au panneau d'administration</p>
+      <form onsubmit="verifyAdminPassword(event)">
+        <div class="form-group" style="margin-bottom:16px;">
+          <input type="password" id="adminPasswordInput" placeholder="Code PIN / Mot de passe (ex: 1234)" required autofocus>
+        </div>
+        <div id="authErrorMsg" class="auth-error" style="display:none; color:#ff4d4d; font-size:0.85rem; margin-bottom:12px; font-weight:600;">
+          <i class="fas fa-exclamation-circle"></i> Mot de passe incorrect !
+        </div>
+        <button type="submit" class="admin-btn admin-btn-primary" style="width:100%; justify-content:center;">
+          <i class="fas fa-key"></i> Déverrouiller
+        </button>
+      </form>
+    </div>
+  </div>
+
   <!-- Admin Container -->
-  <div class="admin-container">
+  <div class="admin-container" id="adminMainContainer" style="display:none;">
     
     <!-- Admin Header -->
     <div class="admin-header">
@@ -22,6 +42,7 @@
         <a href="#" class="active" onclick="showTab('products')"><i class="fas fa-box"></i> Produits</a>
         <a href="#" onclick="showTab('import')"><i class="fas fa-file-excel"></i> Import Excel</a>
         <a href="#" onclick="showTab('add')"><i class="fas fa-plus-circle"></i> Ajouter</a>
+        <a href="#" onclick="lockAdmin()" style="margin-left:auto; color:#ff4d4d;"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
       </div>
     </div>
 
@@ -95,8 +116,13 @@
           <p>Formats supportés: .xlsx, .xls, .csv</p>
           <div class="file-types">Maximum 10MB</div>
         </div>
-        <div class="template-download" onclick="downloadTemplate()">
-          <i class="fas fa-download"></i> Télécharger le modèle Excel
+        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:16px;">
+          <div class="template-download" onclick="loadDefaultCSV()">
+            <i class="fas fa-sync-alt"></i> Charger "produits_agharbi.csv"
+          </div>
+          <div class="template-download" onclick="downloadTemplate()">
+            <i class="fas fa-download"></i> Télécharger le modèle Excel
+          </div>
         </div>
       </div>
 

@@ -63,11 +63,50 @@ const DEFAULT_PRODUCTS = [
   }
 ];
 
+// ---- Admin Auth ----
+const ADMIN_PIN = "1234";
+
+function checkAdminAuth() {
+  const isAuth = sessionStorage.getItem('agharbi_admin_auth') === 'true';
+  const overlay = document.getElementById('adminAuthOverlay');
+  const container = document.getElementById('adminMainContainer');
+  if (isAuth) {
+    if (overlay) overlay.style.display = 'none';
+    if (container) container.style.display = 'block';
+  } else {
+    if (overlay) overlay.style.display = 'flex';
+    if (container) container.style.display = 'none';
+  }
+}
+
+function verifyAdminPassword(e) {
+  e.preventDefault();
+  const pwd = document.getElementById('adminPasswordInput').value;
+  const errorMsg = document.getElementById('authErrorMsg');
+  if (pwd === ADMIN_PIN || pwd === "agharbi2024") {
+    sessionStorage.setItem('agharbi_admin_auth', 'true');
+    if (errorMsg) errorMsg.style.display = 'none';
+    checkAdminAuth();
+    showToast('Bienvenue dans l\'administration !');
+  } else {
+    if (errorMsg) errorMsg.style.display = 'block';
+    document.getElementById('adminPasswordInput').value = '';
+    document.getElementById('adminPasswordInput').focus();
+  }
+}
+
+function lockAdmin() {
+  sessionStorage.removeItem('agharbi_admin_auth');
+  checkAdminAuth();
+  showToast('Déconnecté de l\'administration');
+}
+
 let products = [];
 let pendingImport = [];
 
 // ---- Initialize ----
 document.addEventListener('DOMContentLoaded', () => {
+  checkAdminAuth();
   loadProducts();
   renderTable();
   updateStats();
@@ -436,6 +475,55 @@ function downloadTemplate() {
 
   XLSX.writeFile(workbook, 'agharbi_modele_produits.xlsx');
   showToast('Modèle Excel téléchargé !');
+}
+
+// ---- Load Default CSV File ----
+function loadDefaultCSV() {
+  fetch('produits_agharbi.csv')
+    .then(res => {
+      if (!res.ok) throw new Error('Fichier produits_agharbi.csv introuvable');
+      return res.text();
+    })
+    .then(csvText => {
+      const workbook = XLSX.read(csvText, { type: 'string' });
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+      const jsonData = XLSX.utils.sheet_to_json(sheet);
+
+      if (jsonData.length === 0) {
+        showToast('Le fichier produits_agharbi.csv est vide');
+        return;
+      }
+
+      pendingImport = jsonData.map((row, index) => {
+        const badge = (row.badge || row.Badge || '').toString().toLowerCase();
+        let badge_fr = '', badge_ar = '';
+        if (badge === 'nouveau' || badge === 'new') { badge_fr = 'Nouveau'; badge_ar = 'جديد'; }
+        if (badge === 'bestseller' || badge === 'best-seller') { badge_fr = 'Best-seller'; badge_ar = 'الأكثر مبيعاً'; }
+
+        return {
+          id: getNextId() + index,
+          name_fr: row.name_fr || row.nom_fr || row['Nom (FR)'] || row.name || '',
+          name_ar: row.name_ar || row.nom_ar || row['Nom (AR)'] || '',
+          category: (row.category || row.categorie || row['Catégorie'] || 'homme').toString().toLowerCase(),
+          price: parseInt(row.price || row.prix || row['Prix'] || 0),
+          image: row.image || row.Image || 'images/perfume-men-1.jpg',
+          description_fr: row.description_fr || row.desc_fr || row['Description (FR)'] || '',
+          description_ar: row.description_ar || row.desc_ar || row['Description (AR)'] || '',
+          sizes: (row.sizes || row.tailles || row.Tailles || '50ml, 100ml').toString().split(',').map(s => s.trim()),
+          badge: badge,
+          badge_fr: badge_fr,
+          badge_ar: badge_ar
+        };
+      });
+
+      renderPreview();
+      showToast(`${pendingImport.length} produit(s) chargés depuis produits_agharbi.csv`);
+    })
+    .catch(err => {
+      console.error(err);
+      showToast('Impossible de charger produits_agharbi.csv', 'fas fa-exclamation-triangle');
+    });
 }
 
 // ---- Drag & Drop ----
